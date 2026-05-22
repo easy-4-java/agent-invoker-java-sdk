@@ -335,18 +335,20 @@ def apply_aliyun_distribution_management() -> None:
     POM.write_text(stripped[:pos] + "\n" + ALIYUN_DM + "\n" + stripped[pos:], encoding="utf-8")
 
 
-def _snapshot_suffix() -> str:
-    """{YYYYMMDD}-SNAPSHOT；日期来自 RELEASE_DATE 或当天。"""
+def version_date_suffix() -> str:
+    """SNAPSHOT: {date}-SNAPSHOT；RELEASE(RELEASE=1): 仅 {date}。"""
     raw = os.environ.get("RELEASE_DATE", "").strip()
     day = raw if raw else date.today().strftime("%Y%m%d")
+    if os.environ.get("RELEASE", "").strip().lower() in ("1", "true", "yes"):
+        return day
     return f"{day}-SNAPSHOT"
 
 
-SNAPSHOT_SUFFIX = _snapshot_suffix()
+VERSION_DATE_SUFFIX = version_date_suffix()
 
 
 def render(branch: str) -> None:
-    snapshot = SNAPSHOT_SUFFIX
+    snapshot = VERSION_DATE_SUFFIX
     if branch == "main":
         write_slim_j17(f"3.3.x.{snapshot}", "2.0.16", "main / Spring Boot 3.3.x baseline (JDK 17)")
     elif branch == "2.3.x":
