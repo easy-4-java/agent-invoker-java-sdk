@@ -241,7 +241,7 @@ def write_minimal_j8(version: str) -> None:
     POM.write_text(body, encoding="utf-8")
 
 
-def write_full_j8_27(version: str) -> None:
+def write_full_j11_27(version: str) -> None:
     """对齐 openclaw-java-sdk 2.7.x 插件矩阵，JDK 8。"""
     body = f'''<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -254,7 +254,7 @@ def write_full_j8_27(version: str) -> None:
     <version>{version}</version>
     <packaging>jar</packaging>
     <name>${{project.groupId}}:${{project.artifactId}}</name>
-    <description>AI Agent Invoker abstraction SDK — Spring Boot 2.7.x line (JDK 8)</description>
+    <description>AI Agent Invoker abstraction SDK — Spring Boot 2.7.x line (JDK 11)</description>
     <url>https://github.com/hiwepy/${{project.artifactId}}</url>
 
 {COMMON_META}
@@ -267,7 +267,7 @@ def write_full_j8_27(version: str) -> None:
     </distributionManagement>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.36</slf4j.version>
 {COMMON_DEPS_J8}
@@ -344,7 +344,7 @@ def render(branch: str) -> None:
     elif branch == "2.3.x":
         write_minimal_j8(f"2.3.x.{snapshot}")
     elif branch == "2.7.x":
-        write_full_j8_27(f"2.7.x.{snapshot}")
+        write_full_j11_27(f"2.7.x.{snapshot}")
     elif branch in {"3.0.x", "3.1.x", "3.2.x", "3.3.x", "3.4.x"}:
         write_slim_j17(f"{branch}.{snapshot}", "1.7.36", f"Spring Boot {branch[:-4]} line (JDK 17)")
     elif branch in {"3.5.x", "4.0.x"}:
