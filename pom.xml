@@ -99,7 +99,7 @@
     <dependencies>
         <dependency>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <version>2.7.x.20260527-SNAPSHOT</version>
         </dependency>
         <dependency>
             <artifactId>jackson-databind</artifactId>
