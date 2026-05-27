@@ -6,7 +6,7 @@
 
     <groupId>io.github.hiwepy</groupId>
     <artifactId>agent-invoker-java-sdk</artifactId>
-    <version>3.3.x.20260520-SNAPSHOT</version>
+    <version>2.3.x.20260527-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>AI Agent Invoker abstraction SDK — main / Spring Boot 3.3.x baseline (JDK 17)</description>
@@ -64,8 +64,7 @@
 
 
     <properties>
-        <java.version>17</java.version>
-        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
