@@ -69,6 +69,7 @@
         <junit.version>5.8.2</junit.version>
         <lombok.version>1.18.30</lombok.version>
         <openclaw-java-sdk.version>2.7.x.20260527-SNAPSHOT</openclaw-java-sdk.version>
+        <opencode-java-sdk.version>2.7.x.20260605-SNAPSHOT</opencode-java-sdk.version>
 
         <maven.version>3.0</maven.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
