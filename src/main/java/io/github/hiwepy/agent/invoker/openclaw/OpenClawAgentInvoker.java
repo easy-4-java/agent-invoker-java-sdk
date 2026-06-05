@@ -147,13 +147,13 @@ public class OpenClawAgentInvoker implements AgentInvoker {
                                                         OpenClawInvokeRequestMapper.HookSessionStrategy strategy) {
         switch (strategy) {
             case ONE_SHOT:
-                return openClawClient.agentOneShot(request);
+                return openClawClient.agent(request);
             case EPHEMERAL_PEER:
-                return openClawClient.agentOneShotForPeer(requirePeerId(peerId), request);
+                return openClawClient.agent(request);
             case EPHEMERAL_PEER_WITH_CORRELATION:
-                return openClawClient.agentOneShotForPeer(requirePeerId(peerId), cmd.getTaskId().trim(), request);
+                return openClawClient.agent(request);
             case STABLE:
-                return openClawClient.agentWithStableSession(cmd.getAgentId(), requirePeerId(peerId), request);
+                return openClawClient.agent(request);
             case EXPLICIT:
                 return openClawClient.agent(request);
             default:
