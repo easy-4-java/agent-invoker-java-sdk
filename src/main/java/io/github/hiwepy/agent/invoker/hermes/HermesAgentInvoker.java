@@ -11,6 +11,7 @@ import io.github.hiwepy.hermes.model.RunStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+<<<<<<< HEAD
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -23,6 +24,10 @@ import java.util.concurrent.ConcurrentMap;
  * @author wandl
  * @since 1.0.0
  */
+=======
+import java.util.concurrent.*;
+
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
 @Slf4j
 public class HermesAgentInvoker implements AgentInvoker {
 
@@ -31,6 +36,7 @@ public class HermesAgentInvoker implements AgentInvoker {
     private final HermesClient hermesClient;
     private final HermesCallbackParser callbackParser;
     private final String callbackBaseUrl;
+<<<<<<< HEAD
     private final String defaultInstructions;
     private final ConcurrentMap<String, String> taskIdToRunId = new ConcurrentHashMap<String, String>();
 
@@ -45,6 +51,18 @@ public class HermesAgentInvoker implements AgentInvoker {
         this.hermesClient = Objects.requireNonNull(hermesClient, "hermesClient");
         this.callbackBaseUrl = callbackBaseUrl != null ? callbackBaseUrl : "http://localhost:7088";
         this.defaultInstructions = defaultInstructions;
+=======
+    private final ConcurrentMap<String, String> taskIdToRunId = new ConcurrentHashMap<>();
+    private final ExecutorService pollingExecutor = Executors.newCachedThreadPool(r -> {
+        Thread t = new Thread(r, "hermes-poll");
+        t.setDaemon(true);
+        return t;
+    });
+
+    public HermesAgentInvoker(HermesClient hermesClient, String callbackBaseUrl) {
+        this.hermesClient = Objects.requireNonNull(hermesClient, "hermesClient");
+        this.callbackBaseUrl = callbackBaseUrl != null ? callbackBaseUrl : "http://localhost:7088";
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
         this.callbackParser = new HermesCallbackParser();
     }
 
@@ -61,17 +79,29 @@ public class HermesAgentInvoker implements AgentInvoker {
             return SubmitResult.builder()
                     .taskId(taskId)
                     .status(SubmitResult.InvokeStatus.REJECTED)
+<<<<<<< HEAD
                     .message("enhancedPrompt is required for Hermes")
+=======
+                    .message("enhancedPrompt is required for hermes")
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
                     .build();
         }
 
         try {
+<<<<<<< HEAD
             RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd, defaultInstructions);
             log.debug("Hermes createRun, taskId={}, model={}", taskId, request.getModel());
 
             RunStatus runStatus = hermesClient.createRun(request);
             if (runStatus == null || runStatus.getRunId() == null) {
                 log.warn("Hermes createRun failed, taskId={}", taskId);
+=======
+            RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd,
+                    hermesClient.getConfig().getDefaultInstructions());
+            RunStatus result = hermesClient.createRun(request);
+            if (result == null || result.getRunId() == null) {
+                log.warn("Hermes invoke failed, taskId={}", taskId);
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
                 return SubmitResult.builder()
                         .taskId(taskId)
                         .status(SubmitResult.InvokeStatus.REJECTED)
@@ -79,6 +109,7 @@ public class HermesAgentInvoker implements AgentInvoker {
                         .build();
             }
 
+<<<<<<< HEAD
             String runId = runStatus.getRunId();
             if (taskId != null) {
                 taskIdToRunId.put(taskId, runId);
@@ -89,6 +120,14 @@ public class HermesAgentInvoker implements AgentInvoker {
 
             // Start async polling
             CompletableFuture.runAsync(() -> pollUntilComplete(runId, taskId, callbackUrl));
+=======
+            String runId = result.getRunId();
+            taskIdToRunId.put(taskId, runId);
+            log.info("Hermes invoke success, taskId={}, runId={}", taskId, runId);
+
+            // Async polling for completion
+            pollingExecutor.submit(() -> pollUntilComplete(taskId, runId, cmd.getCallbackUrl(), cmd.getCallbackToken()));
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
 
             return SubmitResult.builder()
                     .taskId(taskId)
@@ -106,6 +145,7 @@ public class HermesAgentInvoker implements AgentInvoker {
         }
     }
 
+<<<<<<< HEAD
     /**
      * 异步轮询 Hermes Run 状态，完成后解析输出并回调。
      */
@@ -173,6 +213,50 @@ public class HermesAgentInvoker implements AgentInvoker {
             conn.disconnect();
         } catch (Exception e) {
             log.error("Hermes callback POST failed to {}: {}", callbackUrl, e.getMessage(), e);
+=======
+    private void pollUntilComplete(String taskId, String runId, String callbackUrl, String callbackToken) {
+        int maxAttempts = 100;
+        int intervalMs = 3000;
+        for (int i = 0; i < maxAttempts; i++) {
+            try {
+                Thread.sleep(intervalMs);
+                RunStatus status = hermesClient.getRun(runId);
+                if (status == null) continue;
+                String state = status.getStatus();
+                if ("completed".equals(state)) {
+                    CallbackOutcome outcome = callbackParser.parseFromRunStatus(status, taskId);
+                    if (outcome != null) {
+                        log.info("Hermes run completed, taskId={}, runId={}", taskId, runId);
+                        // POST callback if URL provided
+                        if (callbackUrl != null && !callbackUrl.isEmpty()) {
+                            postCallback(callbackUrl, callbackToken, outcome);
+                        }
+                    }
+                    taskIdToRunId.remove(taskId);
+                    return;
+                } else if ("failed".equals(state) || "cancelled".equals(state)) {
+                    log.warn("Hermes run {}, taskId={}, runId={}", state, taskId, runId);
+                    taskIdToRunId.remove(taskId);
+                    return;
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            } catch (Exception e) {
+                log.warn("Hermes poll error, taskId={}, attempt={}: {}", taskId, i, e.getMessage());
+            }
+        }
+        log.warn("Hermes poll timeout, taskId={}, runId={}", taskId, runId);
+    }
+
+    private void postCallback(String callbackUrl, String callbackToken, CallbackOutcome outcome) {
+        try {
+            log.info("Posting callback to {} for taskId={}", callbackUrl, outcome.getTaskId());
+            // Use HermesClient's HTTP capability or a simple HTTP call
+            // For now, log the callback - actual HTTP POST implementation depends on the callback protocol
+        } catch (Exception e) {
+            log.error("Failed to post callback for taskId={}: {}", outcome.getTaskId(), e.getMessage());
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
         }
     }
 
@@ -187,6 +271,7 @@ public class HermesAgentInvoker implements AgentInvoker {
             log.warn("Hermes cancel: no runId mapped for taskId={}", taskId);
             return;
         }
+<<<<<<< HEAD
         log.info("Hermes cancel requested: taskId={}, runId={}", taskId, runId);
         try {
             hermesClient.stopRun(runId);
@@ -204,4 +289,19 @@ public class HermesAgentInvoker implements AgentInvoker {
         return null;
     }
 
+=======
+        try {
+            hermesClient.stopRun(runId);
+            log.info("Hermes cancel requested: taskId={}, runId={}", taskId, runId);
+        } catch (Exception e) {
+            log.error("Hermes cancel failed for taskId={}, runId={}: {}", taskId, runId, e.getMessage());
+        }
+    }
+
+    @Override
+    public CallbackOutcome handleCallback(RawCallbackPayload payload) {
+        // Hermes has no webhook; polling drives callbacks
+        return null;
+    }
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
 }

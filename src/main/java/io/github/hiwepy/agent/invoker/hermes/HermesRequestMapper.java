@@ -5,6 +5,7 @@ import io.github.hiwepy.hermes.model.RunCreateRequest;
 
 import java.util.Map;
 
+<<<<<<< HEAD
 /**
  * 将业务层 {@link AgentInvokeCmd} 翻译为 Hermes {@link RunCreateRequest}。
  *
@@ -31,10 +32,15 @@ public final class HermesRequestMapper {
      * @param defaultInstructions 默认 instructions（可被变量覆盖）
      * @return Hermes RunCreateRequest
      */
+=======
+public class HermesRequestMapper {
+
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
     public static RunCreateRequest toRunCreateRequest(AgentInvokeCmd cmd, String defaultInstructions) {
         RunCreateRequest request = new RunCreateRequest();
         request.setInput(cmd.getEnhancedPrompt());
 
+<<<<<<< HEAD
         String instructions = stringVariable(cmd, "instructions", defaultInstructions);
         if (instructions != null) {
             request.setInstructions(instructions);
@@ -53,10 +59,35 @@ public final class HermesRequestMapper {
         String conversation = stringVariable(cmd, "conversation", null);
         if (conversation != null) {
             request.setConversation(conversation);
+=======
+        Map<String, Object> variables = cmd.getVariables();
+        if (variables != null) {
+            Object instructions = variables.get("hermes.instructions");
+            if (instructions != null) {
+                request.setInstructions(instructions.toString());
+            }
+            Object model = variables.get("hermes.model");
+            if (model != null) {
+                request.setModel(model.toString());
+            }
+            Object sessionId = variables.get("hermes.sessionId");
+            if (sessionId != null) {
+                request.setSessionId(sessionId.toString());
+            }
+            Object conversation = variables.get("hermes.conversation");
+            if (conversation != null) {
+                request.setConversation(conversation.toString());
+            }
+        }
+
+        if (request.getInstructions() == null && defaultInstructions != null) {
+            request.setInstructions(defaultInstructions);
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
         }
 
         return request;
     }
+<<<<<<< HEAD
 
     private static String stringVariable(AgentInvokeCmd cmd, String key, String defaultValue) {
         String value = readVariable(cmd, key);
@@ -79,4 +110,6 @@ public final class HermesRequestMapper {
     private static boolean hasText(String value) {
         return value != null && !value.trim().isEmpty();
     }
+=======
+>>>>>>> c15e88a (feat: add hermes-agent adapter)
 }
