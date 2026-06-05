@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
 import io.github.hiwepy.openclaw.InvokeAgentRequest;
-import io.github.hiwepy.openclaw.OpenClawSessionKeys;
+
 
 import java.util.Map;
 import java.util.Objects;
@@ -187,9 +187,9 @@ public final class OpenClawInvokeRequestMapper {
                 case EXPLICIT:
                     return null;
                 case EPHEMERAL_PEER_WITH_CORRELATION:
-                    return OpenClawSessionKeys.forEphemeralPeer(peerId, cmd.getTaskId().trim());
+                    return "hook:" + peerId + ":" + cmd.getTaskId().trim();
                 case STABLE:
-                    return OpenClawSessionKeys.forStableSession(cmd.getAgentId(), peerId);
+                    return "hook:" + cmd.getAgentId().trim() + ":" + peerId;
                 default:
                     return null;
             }
