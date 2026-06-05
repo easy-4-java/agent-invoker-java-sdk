@@ -11,7 +11,6 @@ import os
 import pathlib
 import re
 import sys
-from datetime import date
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 POM = ROOT / "pom.xml"
@@ -199,7 +198,7 @@ def write_minimal_j8(version: str) -> None:
 
 {COMMON_META}
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -255,7 +254,7 @@ def write_full_j8_27(version: str) -> None:
     <version>{version}</version>
     <packaging>jar</packaging>
     <name>${{project.groupId}}:${{project.artifactId}}</name>
-    <description>AI Agent Invoker abstraction SDK — Spring Boot 2.7.x line (JDK 8)</description>
+    <description>AI Agent Invoker abstraction SDK — Spring Boot 2.7.x line (JDK 11)</description>
     <url>https://github.com/hiwepy/${{project.artifactId}}</url>
 
 {COMMON_META}
@@ -335,20 +334,11 @@ def apply_aliyun_distribution_management() -> None:
     POM.write_text(stripped[:pos] + "\n" + ALIYUN_DM + "\n" + stripped[pos:], encoding="utf-8")
 
 
-def version_date_suffix() -> str:
-    """SNAPSHOT: {date}-SNAPSHOT；RELEASE(RELEASE=1): 仅 {date}。"""
-    raw = os.environ.get("RELEASE_DATE", "").strip()
-    day = raw if raw else date.today().strftime("%Y%m%d")
-    if os.environ.get("RELEASE", "").strip().lower() in ("1", "true", "yes"):
-        return day
-    return f"{day}-SNAPSHOT"
-
-
-VERSION_DATE_SUFFIX = version_date_suffix()
+SNAPSHOT_SUFFIX = f"{os.environ.get('RELEASE_DATE', '20260520')}-SNAPSHOT"
 
 
 def render(branch: str) -> None:
-    snapshot = VERSION_DATE_SUFFIX
+    snapshot = SNAPSHOT_SUFFIX
     if branch == "main":
         write_slim_j17(f"3.3.x.{snapshot}", "2.0.16", "main / Spring Boot 3.3.x baseline (JDK 17)")
     elif branch == "2.3.x":
