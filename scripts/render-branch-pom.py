@@ -156,9 +156,9 @@ def write_slim_j17(version: str, slf4j: str, description_suffix: str) -> None:
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>{slf4j}</slf4j.version>
 {COMMON_DEPS_J17}
-        <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
-        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
-        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
+        <openclaw-java-sdk.version>{os.environ.get('OPENCLAW_JAVA_SDK_VERSION', version)}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{os.environ.get('HERMES_JAVA_SDK_VERSION', version)}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{os.environ.get('OPENCODE_JAVA_SDK_VERSION', version)}</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
@@ -218,9 +218,9 @@ def write_minimal_j8(version: str) -> None:
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.36</slf4j.version>
 {COMMON_DEPS_J8}
-        <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
-        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
-        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
+        <openclaw-java-sdk.version>{os.environ.get('OPENCLAW_JAVA_SDK_VERSION', version)}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{os.environ.get('HERMES_JAVA_SDK_VERSION', version)}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{os.environ.get('OPENCODE_JAVA_SDK_VERSION', version)}</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -287,9 +287,9 @@ def write_full_j8_27(version: str) -> None:
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.36</slf4j.version>
 {COMMON_DEPS_J8}
-        <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
-        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
-        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
+        <openclaw-java-sdk.version>{os.environ.get('OPENCLAW_JAVA_SDK_VERSION', version)}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{os.environ.get('HERMES_JAVA_SDK_VERSION', version)}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{os.environ.get('OPENCODE_JAVA_SDK_VERSION', version)}</opencode-java-sdk.version>
 
         <maven.version>3.0</maven.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
@@ -353,6 +353,10 @@ def apply_aliyun_distribution_management() -> None:
 
 
 SNAPSHOT_SUFFIX = f"{os.environ.get('RELEASE_DATE', '20260520')}-SNAPSHOT"
+
+# SDK versions can be overridden via env vars; fall back to agent-invoker version
+def sdk_version(branch: str, default_date_suffix: str = SNAPSHOT_SUFFIX) -> str:
+    return f"{branch}.{default_date_suffix}"
 
 
 def render(branch: str) -> None:
