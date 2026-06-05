@@ -1,7 +1,7 @@
 package io.github.hiwepy.agent.invoker.opencode;
 
 import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.agent.invoker.AiAgentInvoker;
+import io.github.hiwepy.agent.invoker.AgentInvoker;
 import io.github.hiwepy.agent.invoker.CallbackOutcome;
 import io.github.hiwepy.agent.invoker.RawCallbackPayload;
 import io.github.hiwepy.agent.invoker.SubmitResult;
@@ -18,11 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * OpenCode 适配器：实现 {@link AiAgentInvoker}，将业务语义翻译为 OpenCode Server REST API 调用。
+ * OpenCode 适配器：实现 {@link AgentInvoker}，将业务语义翻译为 OpenCode Server REST API 调用。
  *
  * <p>依赖 {@code opencode-java-sdk}（optional），仅在类路径存在 OpenCodeClient 时可用。</p>
  *
- * <p>与 OpenClawAiAgentInvoker 的关键差异：</p>
+ * <p>与 OpenClawAgentInvoker 的关键差异：</p>
  * <ul>
  *     <li>OpenClaw 使用 webhook + 异步回调模式</li>
  *     <li>OpenCode 使用 session.prompt 同步等待模式（或 promptAsync + 轮询）</li>
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentMap;
  * @since 1.0.0
  */
 @Slf4j
-public class OpenCodeAiAgentInvoker implements AiAgentInvoker {
+public class OpenCodeAgentInvoker implements AgentInvoker {
 
     public static final String PROVIDER_CODE = "opencode";
 
@@ -48,7 +48,7 @@ public class OpenCodeAiAgentInvoker implements AiAgentInvoker {
      * @param defaultAgent   默认 agent（如 "build"）
      * @param defaultModel   默认模型（如 "anthropic/claude-sonnet-4-5"）
      */
-    public OpenCodeAiAgentInvoker(OpenCodeClient openCodeClient,
+    public OpenCodeAgentInvoker(OpenCodeClient openCodeClient,
                                   String defaultAgent,
                                   String defaultModel) {
         this.openCodeClient = java.util.Objects.requireNonNull(openCodeClient, "openCodeClient");
