@@ -99,6 +99,18 @@ DEPS_BLOCK_TEMPLATE = """
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>io.github.hiwepy</groupId>
+            <artifactId>hermes-java-sdk</artifactId>
+            <version>${hermes-java-sdk.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hiwepy</groupId>
+            <artifactId>opencode-java-sdk</artifactId>
+            <version>${opencode-java-sdk.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -145,6 +157,8 @@ def write_slim_j17(version: str, slf4j: str, description_suffix: str) -> None:
         <slf4j.version>{slf4j}</slf4j.version>
 {COMMON_DEPS_J17}
         <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
@@ -205,6 +219,8 @@ def write_minimal_j8(version: str) -> None:
         <slf4j.version>1.7.36</slf4j.version>
 {COMMON_DEPS_J8}
         <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -272,6 +288,8 @@ def write_full_j8_27(version: str) -> None:
         <slf4j.version>1.7.36</slf4j.version>
 {COMMON_DEPS_J8}
         <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
 
         <maven.version>3.0</maven.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
