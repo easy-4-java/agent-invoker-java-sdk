@@ -48,7 +48,7 @@
         <junit.version>5.11.4</junit.version>
         <lombok.version>1.18.36</lombok.version>
         <openclaw-java-sdk.version>3.3.x.20260520-SNAPSHOT</openclaw-java-sdk.version>
-        <opencode-java-sdk.version>2.7.x.20260605-SNAPSHOT</opencode-java-sdk.version>
+        <opencode-java-sdk.version>3.2.x.20260605-SNAPSHOT</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
