@@ -8,6 +8,7 @@ import io.github.hiwepy.agent.invoker.SubmitResult;
 import io.github.hiwepy.openclaw.InvokeAgentRequest;
 import io.github.hiwepy.openclaw.InvokeAgentResult;
 import io.github.hiwepy.openclaw.OpenClawClient;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +23,8 @@ import java.util.concurrent.ConcurrentMap;
  * @author wandl
  * @since 1.0.0
  */
+@Slf4j
 public class OpenClawAiAgentInvoker implements AiAgentInvoker {
-
-    private static final Logger log = LoggerFactory.getLogger(OpenClawAiAgentInvoker.class);
 
     public static final String PROVIDER_CODE = "openclaw";
 
