@@ -1,8 +1,8 @@
-package io.github.hiwepy.agent.invoker.openclaw;
+package io.github.easy4j.agent.invoker.openclaw;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.hiwepy.agent.invoker.CallbackOutcome;
-import io.github.hiwepy.agent.invoker.RawCallbackPayload;
+import io.github.easy4j.agent.invoker.CallbackOutcome;
+import io.github.easy4j.agent.invoker.RawCallbackPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

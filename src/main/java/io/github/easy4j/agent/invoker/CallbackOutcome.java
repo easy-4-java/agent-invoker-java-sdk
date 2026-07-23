@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker;
+package io.github.easy4j.agent.invoker;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
-package io.github.hiwepy.agent.invoker.openclaw;
+package io.github.easy4j.agent.invoker.openclaw;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.openclaw.InvokeAgentRequest;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.openclaw.InvokeAgentRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

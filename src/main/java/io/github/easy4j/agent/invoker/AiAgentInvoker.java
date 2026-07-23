@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker;
+package io.github.easy4j.agent.invoker;
 
 /**
  * AI 智能体调用抽象。

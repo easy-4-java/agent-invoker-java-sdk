@@ -1,7 +1,7 @@
-package io.github.hiwepy.agent.invoker.hermes;
+package io.github.easy4j.agent.invoker.hermes;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.hermes.model.RunCreateRequest;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.hermes.model.RunCreateRequest;
 
 import java.util.Map;
 

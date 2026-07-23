@@ -1,13 +1,13 @@
-package io.github.hiwepy.agent.invoker.openclaw;
+package io.github.easy4j.agent.invoker.openclaw;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.agent.invoker.AiAgentInvoker;
-import io.github.hiwepy.agent.invoker.CallbackOutcome;
-import io.github.hiwepy.agent.invoker.RawCallbackPayload;
-import io.github.hiwepy.agent.invoker.SubmitResult;
-import io.github.hiwepy.openclaw.InvokeAgentRequest;
-import io.github.hiwepy.openclaw.InvokeAgentResult;
-import io.github.hiwepy.openclaw.OpenClawClient;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.agent.invoker.AiAgentInvoker;
+import io.github.easy4j.agent.invoker.CallbackOutcome;
+import io.github.easy4j.agent.invoker.RawCallbackPayload;
+import io.github.easy4j.agent.invoker.SubmitResult;
+import io.github.easy4j.openclaw.InvokeAgentRequest;
+import io.github.easy4j.openclaw.InvokeAgentResult;
+import io.github.easy4j.openclaw.OpenClawClient;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

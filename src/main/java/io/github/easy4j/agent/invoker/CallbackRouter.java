@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker;
+package io.github.easy4j.agent.invoker;
 
 /**
  * AI Agent 回调路由器。根据 providerCode 将原始回调载荷路由到对应的 Provider adapter。

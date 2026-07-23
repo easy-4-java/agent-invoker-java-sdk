@@ -1,9 +1,9 @@
-package io.github.hiwepy.agent.invoker.openclaw;
+package io.github.easy4j.agent.invoker.openclaw;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.openclaw.InvokeAgentRequest;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.openclaw.InvokeAgentRequest;
 
 import java.util.Map;
 import java.util.Objects;
@@ -26,7 +26,7 @@ public final class OpenClawInvokeRequestMapper {
      *
      * @param cmd             业务调用命令
      * @param callbackBaseUrl adapter 级 callback 基础 URL（{@code agents.provider.openclaw.callback-base-url}）
-     * @return 可直接交给 {@link io.github.hiwepy.openclaw.OpenClawClient#agent(InvokeAgentRequest)} 的请求
+     * @return 可直接交给 {@link io.github.easy4j.openclaw.OpenClawClient#agent(InvokeAgentRequest)} 的请求
      */
     public static InvokeAgentRequest toInvokeRequest(AgentInvokeCmd cmd, String callbackBaseUrl) {
         Objects.requireNonNull(cmd, "cmd");

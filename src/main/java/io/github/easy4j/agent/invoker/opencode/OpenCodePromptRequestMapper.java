@@ -1,7 +1,7 @@
-package io.github.hiwepy.agent.invoker.opencode;
+package io.github.easy4j.agent.invoker.opencode;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.opencode.model.PromptRequest;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.opencode.model.PromptRequest;
 
 import java.util.Map;
 import java.util.Objects;

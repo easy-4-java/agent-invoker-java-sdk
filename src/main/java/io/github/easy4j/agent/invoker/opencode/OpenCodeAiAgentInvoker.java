@@ -1,14 +1,14 @@
-package io.github.hiwepy.agent.invoker.opencode;
+package io.github.easy4j.agent.invoker.opencode;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.agent.invoker.AiAgentInvoker;
-import io.github.hiwepy.agent.invoker.CallbackOutcome;
-import io.github.hiwepy.agent.invoker.RawCallbackPayload;
-import io.github.hiwepy.agent.invoker.SubmitResult;
-import io.github.hiwepy.opencode.OpenCodeClient;
-import io.github.hiwepy.opencode.model.PromptRequest;
-import io.github.hiwepy.opencode.model.PromptResult;
-import io.github.hiwepy.opencode.model.Session;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.agent.invoker.AiAgentInvoker;
+import io.github.easy4j.agent.invoker.CallbackOutcome;
+import io.github.easy4j.agent.invoker.RawCallbackPayload;
+import io.github.easy4j.agent.invoker.SubmitResult;
+import io.github.easy4j.opencode.OpenCodeClient;
+import io.github.easy4j.opencode.model.PromptRequest;
+import io.github.easy4j.opencode.model.PromptResult;
+import io.github.easy4j.opencode.model.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker;
+package io.github.easy4j.agent.invoker;
 
 /**
  * AI Agent 调用异常。

@@ -1,8 +1,8 @@
-package io.github.hiwepy.agent.invoker.hermes;
+package io.github.easy4j.agent.invoker.hermes;
 
-import io.github.hiwepy.agent.invoker.CallbackOutcome;
-import io.github.hiwepy.hermes.model.RunStatus;
-import io.github.hiwepy.hermes.util.HermesJsonParser;
+import io.github.easy4j.agent.invoker.CallbackOutcome;
+import io.github.easy4j.hermes.model.RunStatus;
+import io.github.easy4j.hermes.util.HermesJsonParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

@@ -1,13 +1,13 @@
-package io.github.hiwepy.agent.invoker.hermes;
+package io.github.easy4j.agent.invoker.hermes;
 
-import io.github.hiwepy.agent.invoker.AgentInvokeCmd;
-import io.github.hiwepy.agent.invoker.AgentInvoker;
-import io.github.hiwepy.agent.invoker.CallbackOutcome;
-import io.github.hiwepy.agent.invoker.RawCallbackPayload;
-import io.github.hiwepy.agent.invoker.SubmitResult;
-import io.github.hiwepy.hermes.HermesClient;
-import io.github.hiwepy.hermes.model.RunCreateRequest;
-import io.github.hiwepy.hermes.model.RunStatus;
+import io.github.easy4j.agent.invoker.AgentInvokeCmd;
+import io.github.easy4j.agent.invoker.AgentInvoker;
+import io.github.easy4j.agent.invoker.CallbackOutcome;
+import io.github.easy4j.agent.invoker.RawCallbackPayload;
+import io.github.easy4j.agent.invoker.SubmitResult;
+import io.github.easy4j.hermes.HermesClient;
+import io.github.easy4j.hermes.model.RunCreateRequest;
+import io.github.easy4j.hermes.model.RunStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
