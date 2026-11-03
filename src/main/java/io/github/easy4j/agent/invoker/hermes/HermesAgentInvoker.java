@@ -1,20 +1,20 @@
 package io.github.easy4j.agent.invoker.hermes;
 
 import io.github.easy4j.agent.invoker.AgentInvokeCmd;
-import io.github.easy4j.agent.invoker.AgentInvoker;
+import io.github.easy4j.agent.invoker.AiAgentInvoker;
 import io.github.easy4j.agent.invoker.CallbackOutcome;
 import io.github.easy4j.agent.invoker.RawCallbackPayload;
 import io.github.easy4j.agent.invoker.SubmitResult;
 import io.github.easy4j.hermes.HermesClient;
-import io.github.easy4j.hermes.model.RunCreateRequest;
-import io.github.easy4j.hermes.model.RunStatus;
+import io.github.easy4j.hermes.api.model.RunCreateRequest;
+import io.github.easy4j.hermes.api.model.RunStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.concurrent.*;
 
 @Slf4j
-public class HermesAgentInvoker implements AgentInvoker {
+public class HermesAgentInvoker implements AiAgentInvoker {
 
     public static final String PROVIDER_CODE = "hermes";
 
@@ -52,8 +52,7 @@ public class HermesAgentInvoker implements AgentInvoker {
         }
 
         try {
-            RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd,
-                    hermesClient.getConfig().getDefaultInstructions());
+            RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd, null);
             RunStatus result = hermesClient.createRun(request);
             if (result == null || result.getRunId() == null) {
                 log.warn("Hermes invoke failed, taskId={}", taskId);
@@ -157,3 +156,4 @@ public class HermesAgentInvoker implements AgentInvoker {
         return null;
     }
 }
+

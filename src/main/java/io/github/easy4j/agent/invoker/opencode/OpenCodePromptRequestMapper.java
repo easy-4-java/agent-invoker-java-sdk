@@ -1,7 +1,7 @@
 package io.github.easy4j.agent.invoker.opencode;
 
 import io.github.easy4j.agent.invoker.AgentInvokeCmd;
-import io.github.easy4j.opencode.model.PromptRequest;
+import io.github.easy4j.opencode.api.model.PromptRequest;
 
 import java.util.Map;
 import java.util.Objects;
@@ -105,3 +105,4 @@ public final class OpenCodePromptRequestMapper {
         return value != null && !value.trim().isEmpty();
     }
 }
+

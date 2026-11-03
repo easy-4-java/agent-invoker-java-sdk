@@ -1,7 +1,7 @@
 package io.github.easy4j.agent.invoker.hermes;
 
 import io.github.easy4j.agent.invoker.AgentInvokeCmd;
-import io.github.easy4j.hermes.model.RunCreateRequest;
+import io.github.easy4j.hermes.api.model.RunCreateRequest;
 
 import java.util.Map;
 
@@ -38,3 +38,4 @@ public class HermesRequestMapper {
         return request;
     }
 }
+

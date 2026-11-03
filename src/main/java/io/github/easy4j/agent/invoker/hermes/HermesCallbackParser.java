@@ -1,7 +1,7 @@
 package io.github.easy4j.agent.invoker.hermes;
 
 import io.github.easy4j.agent.invoker.CallbackOutcome;
-import io.github.easy4j.hermes.model.RunStatus;
+import io.github.easy4j.hermes.api.model.RunStatus;
 import io.github.easy4j.hermes.util.HermesJsonParser;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,3 +51,4 @@ public class HermesCallbackParser {
                 .build();
     }
 }
+
