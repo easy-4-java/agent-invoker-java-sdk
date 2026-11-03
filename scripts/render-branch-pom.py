@@ -72,15 +72,36 @@ COMMON_META = """    <licenses>
     </developers>
 """
 
-COMMON_DEPS_J17 = """        <jackson.version>2.17.2</jackson.version>
+COMMON_DEPS_J17 = """        <jackson.version>2.18.12</jackson.version>
+        <okhttp3-extension.version>2.0.x.20260630</okhttp3-extension.version>
         <junit.version>5.11.4</junit.version>
-        <lombok.version>1.18.36</lombok.version>"""
+        <mockito.version>5.18.0</mockito.version>
+        <lombok.version>1.18.46</lombok.version>"""
 
-COMMON_DEPS_J8 = """        <jackson.version>2.13.5</jackson.version>
+COMMON_DEPS_J8 = """        <jackson.version>2.18.12</jackson.version>
+        <okhttp3-extension.version>1.0.x.20260630</okhttp3-extension.version>
         <junit.version>5.8.2</junit.version>
+        <mockito.version>4.11.0</mockito.version>
         <lombok.version>1.18.30</lombok.version>"""
 
 DEPS_BLOCK_TEMPLATE = """
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>okhttp3-extension</artifactId>
+                <version>${okhttp3-extension.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -123,6 +144,12 @@ DEPS_BLOCK_TEMPLATE = """
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
@@ -132,7 +159,12 @@ DEPS_BLOCK_TEMPLATE = """
 """
 
 
-def write_slim_j17(version: str, slf4j: str, description_suffix: str) -> None:
+def write_slim_j17(version: str, slf4j: str, description_suffix: str,
+                   openclaw_version: str = None, hermes_version: str = None,
+                   opencode_version: str = None) -> None:
+    openclaw_version = openclaw_version or version
+    hermes_version = hermes_version or version
+    opencode_version = opencode_version or version
     body = f'''<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -156,9 +188,9 @@ def write_slim_j17(version: str, slf4j: str, description_suffix: str) -> None:
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>{slf4j}</slf4j.version>
 {COMMON_DEPS_J17}
-        <openclaw-java-sdk.version>{version}</openclaw-java-sdk.version>
-        <hermes-java-sdk.version>{version}</hermes-java-sdk.version>
-        <opencode-java-sdk.version>{version}</opencode-java-sdk.version>
+        <openclaw-java-sdk.version>{openclaw_version}</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>{hermes_version}</hermes-java-sdk.version>
+        <opencode-java-sdk.version>{opencode_version}</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
@@ -179,6 +211,13 @@ def write_slim_j17(version: str, slf4j: str, description_suffix: str) -> None:
                 <configuration>
                     <release>${{java.version}}</release>
                     <encoding>${{project.build.sourceEncoding}}</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${{lombok.version}}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -358,7 +397,8 @@ SNAPSHOT_SUFFIX = f"{os.environ.get('RELEASE_DATE', '20260520')}-SNAPSHOT"
 def render(branch: str) -> None:
     snapshot = SNAPSHOT_SUFFIX
     if branch == "main":
-        write_slim_j17(f"3.3.x.{snapshot}", "2.0.16", "main / Spring Boot 3.3.x baseline (JDK 17)")
+        write_slim_j17(f"3.3.x.{snapshot}", "2.0.16", "main / Spring Boot 3.3.x baseline (JDK 17)",
+                       "2.0.x.20260630", "2.0.x.20260630", "2.0.x.20260730")
     elif branch == "2.3.x":
         write_minimal_j8(f"2.3.x.{snapshot}")
     elif branch == "2.7.x":
@@ -377,3 +417,4 @@ if __name__ == "__main__":
         print(__doc__.strip(), file=sys.stderr)
         sys.exit(2)
     render(sys.argv[1])
+

@@ -1,7 +1,7 @@
 package io.github.easy4j.agent.invoker.openclaw;
 
 import io.github.easy4j.agent.invoker.AgentInvokeCmd;
-import io.github.easy4j.openclaw.InvokeAgentRequest;
+import io.github.easy4j.openclaw.api.model.HookRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -43,7 +43,7 @@ class OpenClawInvokeRequestMapperTest {
                 .variables(Collections.<String, Object>singletonMap("tone", "casual"))
                 .build();
 
-        InvokeAgentRequest request = OpenClawInvokeRequestMapper.toInvokeRequest(cmd, "http://ignored");
+        HookRequest request = OpenClawInvokeRequestMapper.toInvokeRequest(cmd, "http://ignored");
         assertEquals("main", request.getAgentId());
         assertEquals("xiaohongshu", request.getChannel());
         assertEquals("u1", request.getTo());
@@ -65,3 +65,4 @@ class OpenClawInvokeRequestMapperTest {
         assertEquals("invoker:tenant-a:task-b", OpenClawInvokeRequestMapper.buildSessionKey(cmd));
     }
 }
+

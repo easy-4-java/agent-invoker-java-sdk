@@ -5,8 +5,8 @@ import io.github.easy4j.agent.invoker.AiAgentInvoker;
 import io.github.easy4j.agent.invoker.CallbackOutcome;
 import io.github.easy4j.agent.invoker.RawCallbackPayload;
 import io.github.easy4j.agent.invoker.SubmitResult;
-import io.github.easy4j.openclaw.InvokeAgentRequest;
-import io.github.easy4j.openclaw.InvokeAgentResult;
+import io.github.easy4j.openclaw.api.model.HookRequest;
+import io.github.easy4j.openclaw.api.model.HookResponse;
 import io.github.easy4j.openclaw.OpenClawClient;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -62,11 +62,11 @@ public class OpenClawAiAgentInvoker implements AiAgentInvoker {
         }
 
         try {
-            InvokeAgentRequest request = OpenClawInvokeRequestMapper.toInvokeRequest(cmd, callbackBaseUrl);
+            HookRequest request = OpenClawInvokeRequestMapper.toInvokeRequest(cmd, callbackBaseUrl);
             String callbackUrl = OpenClawInvokeRequestMapper.resolveCallbackUrl(cmd, callbackBaseUrl);
             log.debug("OpenClaw invoke, taskId={}, agentId={}, callbackUrl={}", taskId, agentId, callbackUrl);
 
-            InvokeAgentResult result = openClawClient.agent(request);
+            HookResponse result = openClawClient.hook(request);
             if (result == null || !result.isSuccess()) {
                 int status = result != null ? result.getHttpStatus() : -1;
                 String body = result != null ? result.getRawBody() : null;
@@ -139,3 +139,4 @@ public class OpenClawAiAgentInvoker implements AiAgentInvoker {
         return callbackBaseUrl;
     }
 }
+

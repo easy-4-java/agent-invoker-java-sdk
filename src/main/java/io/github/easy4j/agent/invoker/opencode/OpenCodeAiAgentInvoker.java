@@ -6,9 +6,9 @@ import io.github.easy4j.agent.invoker.CallbackOutcome;
 import io.github.easy4j.agent.invoker.RawCallbackPayload;
 import io.github.easy4j.agent.invoker.SubmitResult;
 import io.github.easy4j.opencode.OpenCodeClient;
-import io.github.easy4j.opencode.model.PromptRequest;
-import io.github.easy4j.opencode.model.PromptResult;
-import io.github.easy4j.opencode.model.Session;
+import io.github.easy4j.opencode.api.model.PromptRequest;
+import io.github.easy4j.opencode.api.model.PromptResult;
+import io.github.easy4j.opencode.api.model.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +84,7 @@ public class OpenCodeAiAgentInvoker implements AiAgentInvoker {
             PromptRequest request = OpenCodePromptRequestMapper.toPromptRequest(cmd, defaultAgent, defaultModel);
 
             // 3. 同步发送 prompt 并等待 AI 响应
-            PromptResult result = openCodeClient.prompt(sessionId, request);
+            PromptResult result = openCodeClient.chatCompletion(sessionId, request);
 
             // 4. 记录映射
             if (taskId != null) {
@@ -148,3 +148,4 @@ public class OpenCodeAiAgentInvoker implements AiAgentInvoker {
         return defaultModel;
     }
 }
+

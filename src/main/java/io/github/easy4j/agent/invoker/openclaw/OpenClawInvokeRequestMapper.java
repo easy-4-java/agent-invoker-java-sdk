@@ -3,13 +3,13 @@ package io.github.easy4j.agent.invoker.openclaw;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.easy4j.agent.invoker.AgentInvokeCmd;
-import io.github.easy4j.openclaw.InvokeAgentRequest;
+import io.github.easy4j.openclaw.api.model.HookRequest;
 
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * 将业务层 {@link AgentInvokeCmd} 翻译为 OpenClaw {@link InvokeAgentRequest}。
+ * 将业务层 {@link AgentInvokeCmd} 翻译为 OpenClaw {@link HookRequest}。
  *
  * <p>callbackUrl 优先取自 {@link AgentInvokeCmd#getCallbackUrl()}，否则回退到 adapter 配置的
  * {@code callbackBaseUrl}，并写入 agent 提示词供 OpenClaw 回写业务系统（Gateway Hooks 协议无独立 callbackUrl 字段）。</p>
@@ -26,11 +26,11 @@ public final class OpenClawInvokeRequestMapper {
      *
      * @param cmd             业务调用命令
      * @param callbackBaseUrl adapter 级 callback 基础 URL（{@code agents.provider.openclaw.callback-base-url}）
-     * @return 可直接交给 {@link io.github.easy4j.openclaw.OpenClawClient#agent(InvokeAgentRequest)} 的请求
+     * @return 可直接交给 {@link io.github.easy4j.openclaw.OpenClawClient#hook(HookRequest)} 的请求
      */
-    public static InvokeAgentRequest toInvokeRequest(AgentInvokeCmd cmd, String callbackBaseUrl) {
+    public static HookRequest toInvokeRequest(AgentInvokeCmd cmd, String callbackBaseUrl) {
         Objects.requireNonNull(cmd, "cmd");
-        InvokeAgentRequest request = new InvokeAgentRequest();
+        HookRequest request = new HookRequest();
         request.setAgentId(cmd.getAgentId());
         request.setMessage(buildMessage(cmd, resolveCallbackUrl(cmd, callbackBaseUrl)));
         request.setName("Generation");
@@ -128,3 +128,4 @@ public final class OpenClawInvokeRequestMapper {
         return value != null && !value.trim().isEmpty();
     }
 }
+
