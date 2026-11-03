@@ -6,6 +6,7 @@ import io.github.easy4j.agent.invoker.CallbackOutcome;
 import io.github.easy4j.agent.invoker.RawCallbackPayload;
 import io.github.easy4j.agent.invoker.SubmitResult;
 import io.github.easy4j.hermes.HermesClient;
+import io.github.easy4j.hermes.HermesClientConfig;
 import io.github.easy4j.hermes.api.model.RunCreateRequest;
 import io.github.easy4j.hermes.api.model.RunStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,10 @@ public class HermesAgentInvoker implements AiAgentInvoker {
         }
 
         try {
-            RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd, null);
+            HermesClientConfig config = hermesClient.getConfig();
+            String defaultInstructions = config != null && config.getHttp() != null
+                    ? config.getHttp().getDefaultInstructions() : null;
+            RunCreateRequest request = HermesRequestMapper.toRunCreateRequest(cmd, defaultInstructions);
             RunStatus result = hermesClient.createRun(request);
             if (result == null || result.getRunId() == null) {
                 log.warn("Hermes invoke failed, taskId={}", taskId);
