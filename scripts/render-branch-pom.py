@@ -72,15 +72,27 @@ COMMON_META = """    <licenses>
     </developers>
 """
 
-COMMON_DEPS_J17 = """        <jackson.version>2.17.2</jackson.version>
+COMMON_DEPS_J17 = """        <jackson.version>2.18.12</jackson.version>
         <junit.version>5.11.4</junit.version>
         <lombok.version>1.18.36</lombok.version>"""
 
-COMMON_DEPS_J8 = """        <jackson.version>2.13.5</jackson.version>
+COMMON_DEPS_J8 = """        <jackson.version>2.18.12</jackson.version>
         <junit.version>5.8.2</junit.version>
         <lombok.version>1.18.30</lombok.version>"""
 
 DEPS_BLOCK_TEMPLATE = """
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -212,7 +224,7 @@ def write_minimal_j8(version: str) -> None:
 
 {COMMON_META}
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -377,3 +389,4 @@ if __name__ == "__main__":
         print(__doc__.strip(), file=sys.stderr)
         sys.exit(2)
     render(sys.argv[1])
+
