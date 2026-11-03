@@ -165,18 +165,6 @@ def write_slim_j17(version: str, slf4j: str, description_suffix: str,
     <url>https://github.com/easy-4-java/${{project.artifactId}}</url>
 
 {COMMON_META}
-    <repositories>
-        <repository>
-            <id>2624322-release-6F6h6R</id>
-            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r</url>
-        </repository>
-        <repository>
-            <id>2624322-snapshot-3EoOv3</id>
-            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-    </repositories>
-
     <properties>
         <java.version>17</java.version>
         <maven.compiler.release>${{java.version}}</maven.compiler.release>
@@ -395,7 +383,7 @@ def render(branch: str) -> None:
     snapshot = SNAPSHOT_SUFFIX
     if branch == "main":
         write_slim_j17(f"3.3.x.{snapshot}", "2.0.16", "main / Spring Boot 3.3.x baseline (JDK 17)",
-                       "2.0.x.20260630-SNAPSHOT", "2.0.x.20260630-SNAPSHOT", "2.0.x.20260630-SNAPSHOT")
+                       "2.0.x.20260630", "2.0.x.20260630", "2.0.x.20260730")
     elif branch == "2.3.x":
         write_minimal_j8(f"2.3.x.{snapshot}")
     elif branch == "2.7.x":

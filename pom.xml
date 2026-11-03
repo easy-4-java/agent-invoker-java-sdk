@@ -61,18 +61,6 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <repositories>
-        <repository>
-            <id>2624322-release-6F6h6R</id>
-            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r</url>
-        </repository>
-        <repository>
-            <id>2624322-snapshot-3EoOv3</id>
-            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-    </repositories>
-
 
 
     <properties>
@@ -84,9 +72,9 @@
         <jackson.version>2.18.12</jackson.version>
         <junit.version>5.11.4</junit.version>
         <lombok.version>1.18.46</lombok.version>
-        <openclaw-java-sdk.version>2.0.x.20260630-SNAPSHOT</openclaw-java-sdk.version>
-        <hermes-java-sdk.version>2.0.x.20260630-SNAPSHOT</hermes-java-sdk.version>
-        <opencode-java-sdk.version>2.0.x.20260630-SNAPSHOT</opencode-java-sdk.version>
+        <openclaw-java-sdk.version>2.0.x.20260630</openclaw-java-sdk.version>
+        <hermes-java-sdk.version>2.0.x.20260630</hermes-java-sdk.version>
+        <opencode-java-sdk.version>2.0.x.20260730</opencode-java-sdk.version>
 
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
