@@ -75,11 +75,13 @@ COMMON_META = """    <licenses>
 COMMON_DEPS_J17 = """        <jackson.version>2.18.12</jackson.version>
         <okhttp3-extension.version>2.0.x.20260630</okhttp3-extension.version>
         <junit.version>5.11.4</junit.version>
+        <mockito.version>5.18.0</mockito.version>
         <lombok.version>1.18.46</lombok.version>"""
 
 COMMON_DEPS_J8 = """        <jackson.version>2.18.12</jackson.version>
         <okhttp3-extension.version>1.0.x.20260630</okhttp3-extension.version>
         <junit.version>5.8.2</junit.version>
+        <mockito.version>4.11.0</mockito.version>
         <lombok.version>1.18.30</lombok.version>"""
 
 DEPS_BLOCK_TEMPLATE = """
@@ -139,6 +141,12 @@ DEPS_BLOCK_TEMPLATE = """
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
