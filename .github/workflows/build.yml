@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [2.7.x]
+    branches: [2.7.x, fix/2.7.x-jackson-2.18.12-20261103]
   pull_request:
     branches: [2.7.x]
 
