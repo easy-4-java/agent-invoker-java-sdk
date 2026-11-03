@@ -72,15 +72,27 @@ COMMON_META = """    <licenses>
     </developers>
 """
 
-COMMON_DEPS_J17 = """        <jackson.version>2.17.2</jackson.version>
+COMMON_DEPS_J17 = """        <jackson.version>2.18.12</jackson.version>
         <junit.version>5.11.4</junit.version>
         <lombok.version>1.18.36</lombok.version>"""
 
-COMMON_DEPS_J8 = """        <jackson.version>2.13.5</jackson.version>
+COMMON_DEPS_J8 = """        <jackson.version>2.18.12</jackson.version>
         <junit.version>5.8.2</junit.version>
         <lombok.version>1.18.30</lombok.version>"""
 
 DEPS_BLOCK_TEMPLATE = """
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -319,7 +331,7 @@ def write_full_j8_27(version: str) -> None:
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${{maven-resources-plugin.version}}</version><configuration><encoding>${{project.build.sourceEncoding}}</encoding></configuration></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-release-plugin</artifactId><version>${{maven-release-plugin.version}}</version><configuration><tagNameFormat>v@${{project.version}}</tagNameFormat><autoVersionSubmodules>true</autoVersionSubmodules><useReleaseProfile>false</useReleaseProfile><releaseProfiles>release</releaseProfiles><goals>deploy</goals></configuration></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-source-plugin</artifactId><version>${{maven-source-plugin.version}}</version><configuration><attach>true</attach></configuration><executions><execution><id>attach-sources</id><goals><goal>jar-no-fork</goal></goals></execution></executions></plugin>
-                <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>${{maven-surefire-plugin.version}}</version><configuration><skip>true</skip><skipTests>true</skipTests></configuration></plugin>
+                <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>${{maven-surefire-plugin.version}}</version><configuration><skip>false</skip><skipTests>false</skipTests></configuration></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>${{maven-jar-plugin.version}}</version><configuration><skipIfEmpty>true</skipIfEmpty></configuration></plugin>
                 <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>${{maven-javadoc-plugin.version}}</version><configuration><failOnError>false</failOnError></configuration><executions><execution><id>attach-javadocs</id><phase>package</phase><goals><goal>jar</goal></goals></execution></executions></plugin>
                 <plugin><groupId>org.sonatype.central</groupId><artifactId>central-publishing-maven-plugin</artifactId><version>${{maven-central-publishing-plugin.version}}</version><extensions>true</extensions><configuration><publishingServerId>central</publishingServerId><autoPublish>true</autoPublish><waitUntil>published</waitUntil></configuration></plugin>
@@ -377,3 +389,4 @@ if __name__ == "__main__":
         print(__doc__.strip(), file=sys.stderr)
         sys.exit(2)
     render(sys.argv[1])
+
